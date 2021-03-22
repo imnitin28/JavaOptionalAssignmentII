@@ -55,7 +55,7 @@ public class PhoneBook {
 
   /***
   * <p>finds name of the user using it's phone number.</p>
-   *
+  *
   * @param phoneNumber phone number of an user
   * @return name
   */

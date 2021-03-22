@@ -24,6 +24,7 @@ public class PhoneBookCrawler {
 
   /***
    * <p>attempts to find phone number using name and punish if not found.</p>
+   *
    * @param name name of the user.
    * @return stringMessage
    */
@@ -38,6 +39,7 @@ public class PhoneBookCrawler {
   }
   /***
    * <p>find phone number using name and if not found prints phoneBook.</p>
+   *
    * @param name name of the user.
    * @return phone or phone book
    */
@@ -54,6 +56,7 @@ public class PhoneBookCrawler {
   }
   /***
    * <p>attempts to find phone number using name and punish if not found.</p>
+   *
    * @param name name of the user
    * @return phone or punish message
    */
@@ -73,6 +76,7 @@ public class PhoneBookCrawler {
 
   /***
    * <p>find phone number using name and if not found prints phoneBook.</p>
+   *
    * @param name name of the user.
    * @return phone or phone book
    */
@@ -91,7 +95,9 @@ public class PhoneBookCrawler {
   }
   /***
    * <p>attempts to find phone number using name or vice versa..</p>
+   *
    * @param name name of the user.
+   *
    * @param phoneNumber phone number of the user.
    * @return phone or name of the user as per input.
    */
@@ -99,7 +105,7 @@ public class PhoneBookCrawler {
   public String findPhoneNumberByNameOrNameByPhoneNumber(
           final String name, final String phoneNumber) {
     try {
-      return name.length() == 0 ? phoneBook
+      return name.equals("") ? phoneBook
               .findNameByPhoneNumber(phoneNumber)
               .get() : phoneBook.findPhoneByName(name).get();
     } catch (IllegalArgumentException argumentException) {
@@ -110,6 +116,7 @@ public class PhoneBookCrawler {
 
   /***
    * <p>method to get phone book.</p>
+   *
    * @return phonebook all phone book records.
    */
 
