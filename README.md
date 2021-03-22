@@ -1,20 +1,21 @@
+# JavaOptionalAssignmentII
 Create a Phone Book Class and initialize a map in the PhoneBook class with Name and Phone Numbers.
 Create a PhoneBookCrawler class that uses the PhoneBook
 
 Exercise 1:
-Implement findPhoneByName in PhoneBook class that returns an optional. (No streams)[D]
+Implement findPhoneByName in PhoneBook class that returns an optional. (No streams)
 
 Exercise 2:
-Implement findPhoneByNameAndPunishIfNothingFound in PhoneBookCrawler that uses the implementation from exercise 1[D]
+Implement findPhoneByNameAndPunishIfNothingFound in PhoneBookCrawler that uses the implementation from exercise 1
 
 Exercise 3:
-Implement findPhoneByNameAndPrintPhoneBookIfNothingFound in PhoneBookCrawler that uses the implementation from exercise 1[D]
+Implement findPhoneByNameAndPrintPhoneBookIfNothingFound in PhoneBookCrawler that uses the implementation from exercise 1
 
 Exercise 4
 Did you receive a Hello message from the PhoneBook's toString method? If yes, reimplement the exercise 3 to avoid it get's printed. If no, reimplement exercise 3 to have it actually printed.
 
 Exercise 5
-Can you reimplement exercise 2 using streams instead of using PhoneBook's findPhoneNumberByName.[D]
+Can you reimplement exercise 2 using streams instead of using PhoneBook's findPhoneNumberByName
 
 Exercise 6
 Can you reimplement exercise 3 using streams instead of using PhoneBook's findPhoneNumberByName
