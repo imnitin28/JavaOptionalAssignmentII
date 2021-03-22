@@ -24,7 +24,7 @@ public class PhoneBook {
   /***
   * <p>storing phoneRecords to a phoneDirectory map.</p>
   */
-  private Map<String, String> phoneDirectory = PHONE_RECORDS;
+  private final Map<String, String> phoneDirectory = PHONE_RECORDS;
 
   /***
   * <p>default constructor.</p>
@@ -33,6 +33,7 @@ public class PhoneBook {
 
   /***
    * <p>method to get phone directory in form of map.</p>
+   *
    * @return phoneDirectory complete phone directory.
    */
   public Map<String, String> getPhoneDirectory() {
@@ -41,6 +42,7 @@ public class PhoneBook {
 
   /***
   * <p>function to find phone number using name of the user.</p>
+  *
   * @param name name of the user
   * @return phone phone number of user
   */
@@ -53,6 +55,7 @@ public class PhoneBook {
 
   /***
   * <p>finds name of the user using it's phone number.</p>
+   *
   * @param phoneNumber phone number of an user
   * @return name
   */

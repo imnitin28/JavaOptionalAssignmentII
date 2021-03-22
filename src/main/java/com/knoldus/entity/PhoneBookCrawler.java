@@ -11,9 +11,10 @@ public class PhoneBookCrawler {
   * <p>private instance of PhoneBook class.</p>
   */
 
-  private PhoneBook phoneBook;
+  private final PhoneBook phoneBook;
   /***
    * <p>constructor that takes PhoneBook object as an argument.</p>
+   *
    * @param phoneBook1 PhoneBook instance.
    */
 
@@ -43,8 +44,13 @@ public class PhoneBookCrawler {
 
   public String findPhoneByNameAndPrintPhoneBookIfNothingFound(
           final String name) {
-    return phoneBook.findPhoneByName(name)
-          .orElseGet(() -> String.valueOf(phoneBook.getPhoneDirectory()));
+    try {
+      return phoneBook.findPhoneByName(name)
+              .orElseGet(() -> String.valueOf(phoneBook.getPhoneDirectory()));
+    } catch (IllegalArgumentException argumentException) {
+      argumentException.printStackTrace();
+      return "No relevant data found";
+    }
   }
   /***
    * <p>attempts to find phone number using name and punish if not found.</p>
@@ -55,9 +61,14 @@ public class PhoneBookCrawler {
   public String findPhoneByNameAndPunishIfNothingFoundUsingStreams(
           final String name) {
     Map<String, String> phoneBookList = getPhoneBook().getPhoneDirectory();
-    return Stream.of(phoneBookList)
-            .anyMatch(phoneBookList1 -> phoneBookList
-            .containsKey(name)) ? phoneBookList.get(name) : "Punish";
+    try {
+      return Stream.of(phoneBookList)
+              .anyMatch(phoneBookList1 -> phoneBookList
+                      .containsKey(name)) ? phoneBookList.get(name) : "Punish";
+    } catch (IllegalArgumentException argumentException) {
+      argumentException.printStackTrace();
+      return "No relevant data found";
+    }
   }
 
   /***
@@ -69,9 +80,14 @@ public class PhoneBookCrawler {
   public String findPhoneByNameAndPrintPhoneBookIfNothingFoundStream(
           final String name) {
     Map<String, String> phoneBookList = getPhoneBook().getPhoneDirectory();
-    return Stream.of(phoneBookList)
-            .anyMatch(phoneBookList1 -> phoneBookList.containsKey(name))
-            ? phoneBookList.get(name) : phoneBookList.toString();
+    try {
+      return Stream.of(phoneBookList)
+              .anyMatch(phoneBookList1 -> phoneBookList.containsKey(name))
+              ? phoneBookList.get(name) : phoneBookList.toString();
+    } catch (IllegalArgumentException argumentException) {
+      argumentException.printStackTrace();
+      return "No relevant data found";
+    }
   }
   /***
    * <p>attempts to find phone number using name or vice versa..</p>
@@ -82,9 +98,14 @@ public class PhoneBookCrawler {
 
   public String findPhoneNumberByNameOrNameByPhoneNumber(
           final String name, final String phoneNumber) {
-    return name.length() == 0 ? phoneBook
-                .findNameByPhoneNumber(phoneNumber)
-                .get() : phoneBook.findPhoneByName(name).get();
+    try {
+      return name.length() == 0 ? phoneBook
+              .findNameByPhoneNumber(phoneNumber)
+              .get() : phoneBook.findPhoneByName(name).get();
+    } catch (IllegalArgumentException argumentException) {
+      argumentException.printStackTrace();
+      return "No relevant data found";
+    }
   }
 
   /***
