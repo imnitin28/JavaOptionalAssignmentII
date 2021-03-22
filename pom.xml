@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>JavaOptionalAssignmentII</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <build>
+        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <plugins>
+                <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven.clean.plugin.version}</version>
+                </plugin>
+                <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven.resources.plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven.jar.plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven.install.plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven.deploy.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>default-deploy</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+
+                <!-- SpotBugs Static Analysis -->
+                <!-- SpotBugs is a plugin which uses static analysis to look for bugs in the source code-->
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${maven.spotbugs.plugin.version}</version>
+                    <configuration>
+                        <effort>Max</effort>
+                        <threshold>Low</threshold>
+                        <failOnError>true</failOnError>
+                        <spotbugsXmlOutputDirectory>${project.build.directory}/findbugs</spotbugsXmlOutputDirectory>
+                        <spotbugsXmlOutputFilename>findbugs.xml</spotbugsXmlOutputFilename>
+                        <includeFilterFile>${basedir}/spotbugs-security-include.xml</includeFilterFile>
+                        <excludeFilterFile>${basedir}/spotbugs-security-exclude.xml</excludeFilterFile>
+                        <plugins>
+                            <plugin>
+                                <groupId>com.h3stream.findbugs</groupId>
+                                <artifactId>findbugs-plugin</artifactId>
+                                <version>1.9.0</version>
+                            </plugin>
+                        </plugins>
+                    </configuration>
+                </plugin>
+
+                <!-- PMD Plugin Configuration -->
+                <!-- PMD is a source code analyzer and produces report on both code violations and
+                detected copy and paste fragments. -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${maven.pmd.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>prepare-package</phase>
+                            <configuration>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <skip>${skipCodeAnalysis}</skip>
+                                <rulesets>
+                                    <ruleset>pmd-rules.xml</ruleset>
+                                </rulesets>
+                                <sourceEncoding>utf-8</sourceEncoding>
+                                <minimumTokens>100</minimumTokens>
+                                <!--minimum code size to be checked for repetition.
+                                100 is default and corresponds to  5-10 LOC.-->
+                                <targetJdk>11</targetJdk>
+                                <outputDirectory>${project.build.directory}/pmd</outputDirectory>
+                                <targetDirectory>${project.build.directory}/pmd</targetDirectory>
+                                <excludes>
+                                    <exclude>**/*Bean.java</exclude>
+                                    <exclude>**/generated/*.java</exclude>
+                                    <exclude>**/generated-sources/**</exclude>
+                                </excludes>
+                                <excludeRoots>
+                                    <excludeRoot>target/generated-sources/stubs</excludeRoot>
+                                </excludeRoots>
+                            </configuration>
+                            <goals>
+                                <goal>pmd</goal>
+                                <goal>cpd</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- CheckStyle Plugin Configuration -->
+                <!--Checkstyle plugin checks the source code if it compiles with coding rules and standards -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven.checkstyle.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>validate</id>
+                            <phase>validate</phase>
+                            <configuration>
+                                <configLocation>checkstyle.xml</configLocation>
+                                <encoding>UTF-8</encoding>
+                                <consoleOutput>true</consoleOutput>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <failsOnError>${checkstyle.config.fail.on.error}</failsOnError>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <failOnViolation>${checkstyle.config.fail.on.error}</failOnViolation>
+                                <outputFile>${basedir}/target/checkstyle/checkstyle-output.xml</outputFile>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <skip>${skipCodeAnalysis}</skip>
+                            </configuration>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <configuration>
+                        <configLocation>${basedir}/yourCheckstyle.xml</configLocation>
+                    </configuration>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
